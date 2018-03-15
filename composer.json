@@ -1,11 +1,11 @@
 {
-  "name": "objective-php/phtml-view",
+  "name": "objective-php/phtml-action",
   "description": ".phtml scripts renderer as PSR-15 middleware",
   "type": "library",
   "keywords": [
-    "psr-15", "view", "phtml", "objective php"
+    "psr-15", "action", "view", "phtml", "objective php"
   ],
-  "homepage": "https://github.com/objective-php/phtml-view",
+  "homepage": "https://github.com/objective-php/phtml-action",
   "license": "GPL-3.0",
   "authors": [
     {
