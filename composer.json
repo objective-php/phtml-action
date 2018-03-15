@@ -1,9 +1,9 @@
 {
   "name": "objective-php/phtml-view",
-  "description": "Conditional filter engine",
+  "description": ".phtml scripts renderer as PSR-15 middleware",
   "type": "library",
   "keywords": [
-    "view", "phtml", "objective php"
+    "psr-15", "view", "phtml", "objective php"
   ],
   "homepage": "https://github.com/objective-php/phtml-view",
   "license": "GPL-3.0",
