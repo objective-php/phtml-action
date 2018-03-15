@@ -50,16 +50,13 @@ abstract class PhtmlAction extends HttpAction
     {
         $view = $view ?? $this->resolveViewScriptPath();
         $layout = $layout ?? $this->getDefaultLayout();
-
+        $this->setVars($vars);
 
         $viewRenderer = function () use ($view, $vars) {
 
             if (!file_exists($view)) {
                 throw new PhtmlTemplateNotFoundException(sprintf('View script "%s" does not exist', $view));
             }
-
-            extract($vars);
-
 
             ob_start();
             // deactivate error handler during rendering
@@ -74,14 +71,12 @@ abstract class PhtmlAction extends HttpAction
             return $output;
         };
 
-        $layoutRenderer = function ($layout, $vars, $viewOutput) {
+        $layoutRenderer = function ($layout, $viewOutput) {
 
 
             if (!file_exists($layout)) {
                 throw new PhtmlLayoutNotFoundException(sprintf('Layout script "%s" does not exist', $layout));
             }
-
-            extract($vars);
 
             ob_start();
             // deactivate error handler during rendering
@@ -223,7 +218,7 @@ abstract class PhtmlAction extends HttpAction
     /**
      * @param array $vars
      */
-    public function setVars(array $vars)
+    public function setVars(array &$vars)
     {
         $this->vars = $vars;
     }
