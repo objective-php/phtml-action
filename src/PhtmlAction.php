@@ -9,13 +9,14 @@
 namespace ObjectivePHP\View\Phtml\PhtmlAction;
 
 
+use ObjectivePHP\Html\Tag\Tag;
+use ObjectivePHP\Middleware\HttpAction\HttpAction;
 use ObjectivePHP\View\Phtml\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
 use ObjectivePHP\View\Phtml\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Zend\Diactoros\Response;
 
-abstract class PhtmlAction implements MiddlewareInterface
+abstract class PhtmlAction extends HttpAction
 {
 
     /**
@@ -27,6 +28,16 @@ abstract class PhtmlAction implements MiddlewareInterface
      * @var callable
      */
     protected $errorHandler;
+
+    /**
+     * @var array
+     */
+    protected $vars = [];
+
+    /**
+     * @var string View
+     */
+    protected $viewOutput;
 
     /**
      * @param array $vars
@@ -41,11 +52,9 @@ abstract class PhtmlAction implements MiddlewareInterface
         $layout = $layout ?? $this->getDefaultLayout();
 
 
+        $viewRenderer = function () use ($view, $vars) {
 
-        $viewRenderer = function() use ($view, $vars) {
-
-            if(!file_exists($view))
-            {
+            if (!file_exists($view)) {
                 throw new PhtmlTemplateNotFoundException(sprintf('View script "%s" does not exist', $view));
             }
 
@@ -65,11 +74,10 @@ abstract class PhtmlAction implements MiddlewareInterface
             return $output;
         };
 
-        $layoutRenderer = function($layout, $vars, $viewOutput) {
+        $layoutRenderer = function ($layout, $vars, $viewOutput) {
 
 
-            if(!file_exists($layout))
-            {
+            if (!file_exists($layout)) {
                 throw new PhtmlLayoutNotFoundException(sprintf('Layout script "%s" does not exist', $layout));
             }
 
@@ -94,8 +102,7 @@ abstract class PhtmlAction implements MiddlewareInterface
 
         $output = $viewRenderer();
 
-        if($layout)
-        {
+        if ($layout) {
             $output = $layoutRenderer($vars, $layout, $output);
         }
 
@@ -149,8 +156,7 @@ abstract class PhtmlAction implements MiddlewareInterface
 
         $levelLabel = '';
         $color = '#000';
-        switch($level)
-        {
+        switch ($level) {
             case 1:
             case 16:
             case 64:
@@ -195,12 +201,60 @@ abstract class PhtmlAction implements MiddlewareInterface
         Tag::span('[' . $levelLabel . '] ' . $file . ':' . $line . ' => ' . $message . '<br>')['style'] = 'color: ' . $color . ';font-weight:bold';
     }
 
-    public function getErrorHandler()
+    /**
+     * @return callable
+     */
+    protected function getErrorHandler()
     {
-        if(is_null($this->errorHandler)) {
+        if (!is_null($this->errorHandler)) {
             return [$this, 'errorHandler'];
         }
 
     }
+
+    /**
+     * @return array
+     */
+    public function getVars(): array
+    {
+        return $this->vars;
+    }
+
+    /**
+     * @param array $vars
+     */
+    public function setVars(array $vars)
+    {
+        $this->vars = $vars;
+    }
+
+    /**
+     * @param      $reference
+     * @param null $default
+     *
+     * @return mixed
+     */
+    public function get($reference, $default = null)
+    {
+        return $this->vars[$reference] ?? $default;
+    }
+
+    /**
+     * @param $reference
+     * @param $value
+     */
+    public function set($reference, $value)
+    {
+        $this->vars[$reference] = $value;
+    }
+
+    /**
+     * @param $reference
+     */
+    public function unset($reference)
+    {
+        unset($this->vars[$reference]);
+    }
+
 
 }
