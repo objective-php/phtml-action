@@ -6,13 +6,13 @@
  * Time: 22:43
  */
 
-namespace ObjectivePHP\View\Phtml\PhtmlAction;
+namespace ObjectivePHP\Middleware\Action\PhtmlAction;
 
 
 use ObjectivePHP\Html\Tag\Tag;
 use ObjectivePHP\Middleware\HttpAction\HttpAction;
-use ObjectivePHP\View\Phtml\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
-use ObjectivePHP\View\Phtml\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
+use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
+use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
 

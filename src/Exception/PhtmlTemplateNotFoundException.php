@@ -6,7 +6,7 @@
  * Time: 22:56
  */
 
-namespace ObjectivePHP\View\Phtml\PhtmlAction\Exception;
+namespace ObjectivePHP\Middleware\Action\PhtmlAction\Exception;
 
 
 class PhtmlTemplateNotFoundException extends \Exception
