@@ -9,15 +9,20 @@
 namespace ObjectivePHP\Middleware\Action\PhtmlAction;
 
 
-use ObjectivePHP\Html\Tag\Tag;
-use ObjectivePHP\Middleware\HttpAction\HttpAction;
+use ObjectivePHP\Application\ApplicationAwareInterface;
+use ObjectivePHP\Application\ApplicationAwareTrait;
+use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlDefaultLayout;
+use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
+use ObjectivePHP\Middleware\HttpAction\HttpAction;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
 
-abstract class PhtmlAction extends HttpAction
+abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterface
 {
+
+    use ApplicationAwareTrait;
 
     /**
      * @var string
@@ -39,6 +44,7 @@ abstract class PhtmlAction extends HttpAction
      */
     protected $viewOutput;
 
+
     /**
      * @param array $vars
      * @param null $layout
@@ -48,80 +54,80 @@ abstract class PhtmlAction extends HttpAction
      */
     public function render($vars = [], $layout = null, $view = null): ResponseInterface
     {
-        $view = $view ?? $this->resolveViewScriptPath();
+
         $layout = $layout ?? $this->getDefaultLayout();
         $this->setVars($vars);
 
-        $viewRenderer = function () use ($view, $vars) {
+        $this->setViewOutput($this->renderViewScript($view));
 
-            if (!file_exists($view)) {
-                throw new PhtmlTemplateNotFoundException(sprintf('View script "%s" does not exist', $view));
-            }
-
-            ob_start();
-            // deactivate error handler during rendering
-            $previousErrorHandler = set_error_handler($this->getErrorHandler());
-
-            include $view;
-            $output = ob_get_clean();
-
-            // restore previous error handler
-            set_error_handler($previousErrorHandler);
-
-            return $output;
-        };
-
-        $layoutRenderer = function ($layout, $viewOutput) {
-
-
-            if (!file_exists($layout)) {
-                throw new PhtmlLayoutNotFoundException(sprintf('Layout script "%s" does not exist', $layout));
-            }
-
-            ob_start();
-            // deactivate error handler during rendering
-            $previousErrorHandler = set_error_handler($this->getErrorHandler());
-
-            include $layout;
-
-            $output = ob_get_clean();
-
-            // restore previous error handler
-            set_error_handler($previousErrorHandler);
-
-            $response = new Response();
-            $response->getBody()->write($output);
-
-            return $response;
-        };
-
-        $output = $viewRenderer();
-
-        if ($layout) {
-            $output = $layoutRenderer($vars, $layout, $output);
+        if ($layout !== false) {
+            $this->setViewOutput($this->renderLayoutScript($layout));
         }
 
         $response = new Response();
-        $response->getBody()->write($output);
+        $response->getBody()->write($this->getViewOutput());
 
         return $response;
 
     }
 
-    protected function resolveViewScriptPath()
+    /**
+     * Actually renders a view script
+     *
+     * this method is private since it is not supposed to get triggered
+     * by inherited classes directly, but using render() instead.
+     *
+     * @param $view
+     * @return string
+     * @throws PhtmlTemplateNotFoundException
+     */
+    private function renderViewScript($view)
     {
-        // set default view name
+        $viewScriptPath = $this->resolveViewScriptPath($view);
 
-        $reflected = new \ReflectionObject($this);
-
-        $viewTemplate = substr($reflected->getFileName(), 0, -4) . ".phtml";
-
-        if (!file_exists($viewTemplate)) {
-
-            throw new PhtmlTemplateNotFoundException('Template file "' . $viewTemplate . '“ does not exist.');
+        if (!$viewScriptPath) {
+            throw new PhtmlTemplateNotFoundException(sprintf('No view script matches given template "%s"', $view));
         }
 
-        return $viewTemplate;
+        return $this->import($viewScriptPath);
+    }
+
+    /**
+     * Actually renders a layout script
+     *
+     * this method is private since it is not supposed to get triggered
+     * by inherited classes directly, but using render() instead.
+     *
+     * @param $layout
+     * @return string
+     * @throws PhtmlLayoutNotFoundException
+     */
+    private function renderLayoutScript($layout)
+    {
+        $layoutScriptPath = $this->resolveLayoutScriptPath($layout);
+
+        if (!$layoutScriptPath) {
+            throw new PhtmlLayoutNotFoundException(sprintf('No layout script matches given layout "%s"', $layout));
+        }
+
+        return $this->import($layoutScriptPath);
+    }
+
+    protected function resolveViewScriptPath($template = null)
+    {
+        if (!$template) {
+            // set default view name
+            $reflected = new \ReflectionObject($this);
+
+            $template = substr($reflected->getFileName(), 0, -4) . ".phtml";
+        }
+
+        if (!file_exists($template)) {
+
+            throw new PhtmlTemplateNotFoundException('Template file "' . $template . '“ does not exist.');
+        }
+
+        return $template;
     }
 
     /**
@@ -139,7 +145,12 @@ abstract class PhtmlAction extends HttpAction
      */
     public function getDefaultLayout()
     {
-        return $this->defaultLayout;
+        if ($this->defaultLayout) {
+            return $this->defaultLayout;
+        } else {
+            $config = $this->getApplication()->getConfig();
+            return $config->get(PhtmlDefaultLayout::KEY);
+        }
     }
 
     public function errorHandler($level, $message, $file, $line)
@@ -193,7 +204,7 @@ abstract class PhtmlAction extends HttpAction
 
         $file = ltrim(str_replace(getcwd(), '', $file), '/\\');
 
-        Tag::span('[' . $levelLabel . '] ' . $file . ':' . $line . ' => ' . $message . '<br>')['style'] = 'color: ' . $color . ';font-weight:bold';
+        echo '<span style="color: ' . $color . ';font-weight:bold">[' . $levelLabel . '] ' . $file . ':' . $line . ' => ' . $message . '</span><br>';
     }
 
     /**
@@ -201,8 +212,10 @@ abstract class PhtmlAction extends HttpAction
      */
     protected function getErrorHandler()
     {
-        if (!is_null($this->errorHandler)) {
+        if (is_null($this->errorHandler)) {
             return [$this, 'errorHandler'];
+        } else {
+            return $this->errorHandler;
         }
 
     }
@@ -251,5 +264,62 @@ abstract class PhtmlAction extends HttpAction
         unset($this->vars[$reference]);
     }
 
+    /**
+     * @return string
+     */
+    public function getViewOutput(): string
+    {
+        return $this->viewOutput;
+    }
+
+    /**
+     * @param string $viewOutput
+     */
+    public function setViewOutput(string $viewOutput)
+    {
+        $this->viewOutput = $viewOutput;
+    }
+
+    /**
+     * @param $layout
+     * @return string
+     */
+    protected function resolveLayoutScriptPath($layout)
+    {
+        $config = $this->getApplication()->getConfig();
+        $layoutPaths = $config->get(PhtmlLayoutPath::KEY);
+
+        foreach ($layoutPaths as $layoutPath) {
+            $candidatePath = $layoutPath . '/' . $layout . '.phtml';
+            if (file_exists($candidatePath)) {
+                return $candidatePath;
+            }
+        }
+    }
+
+    protected function import($file)
+    {
+        ob_start();
+        // deactivate error handler during rendering
+        $previousErrorHandler = set_error_handler($this->getErrorHandler());
+
+        if (!file_exists($file)) {
+            trigger_error('View script "' . $file . '" not found.', E_USER_WARNING);
+        } else include "$file";
+
+        $output = ob_get_clean();
+
+        // restore previous error handler
+        set_error_handler($previousErrorHandler);
+
+        return $output;
+    }
+
+    protected function param($key)
+    {
+        $config = $this->getApplication()->getConfig();
+
+        return $config->get($key);
+    }
 
 }
