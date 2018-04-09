@@ -11,6 +11,7 @@ namespace ObjectivePHP\Middleware\Action\PhtmlAction;
 
 use ObjectivePHP\Application\Package\PackageInterface;
 use ObjectivePHP\Config\Config;
+use ObjectivePHP\Config\ConfigAccessorsTrait;
 use ObjectivePHP\Config\ConfigInterface;
 use ObjectivePHP\Config\ConfigProviderInterface;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlDefaultLayout;
@@ -23,6 +24,7 @@ use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
 class PhtmlActionPackage implements PackageInterface, ConfigProviderInterface
 {
 
+    use ConfigAccessorsTrait;
     /**
      * @return ConfigInterface
      */
