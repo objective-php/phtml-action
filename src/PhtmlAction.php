@@ -10,7 +10,7 @@ namespace ObjectivePHP\Middleware\Action\PhtmlAction;
 
 
 use ObjectivePHP\Application\ApplicationAwareInterface;
-use ObjectivePHP\Application\ApplicationAwareTrait;
+use ObjectivePHP\Application\ApplicationAccessorsTrait;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlDefaultLayout;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
 use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
@@ -22,7 +22,7 @@ use Zend\Diactoros\Response;
 abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterface
 {
 
-    use ApplicationAwareTrait;
+    use ApplicationAccessorsTrait;
 
     /**
      * @var string
