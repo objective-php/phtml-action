@@ -56,7 +56,7 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
     {
 
         $layout = $layout ?? $this->getDefaultLayout();
-        $this->setVars($vars);
+        $this->setVars(array_merge($this->getVars(),$vars));
 
         $this->setViewOutput($this->renderViewScript($view));
 
