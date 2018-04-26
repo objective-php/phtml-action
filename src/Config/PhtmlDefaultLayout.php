@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gde
- * Date: 26/03/2018
- * Time: 16:17
- */
 
 namespace ObjectivePHP\Middleware\Action\PhtmlAction\Config;
 
