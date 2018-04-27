@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8890a6e9b2e1a7ec374c0296b4267b2d",
+    "content-hash": "bcd5ebef79b1e3d425b774d6fee95a48",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -815,27 +815,27 @@
         },
         {
             "name": "objective-php/application",
-            "version": "dev-develop",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/application.git",
-                "reference": "9751d0e79a731db7bf9f7551c4cf77e50a82dfb0"
+                "reference": "afeea8d937e06b74fa54782a517c4848b11ecfbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/application/zipball/9751d0e79a731db7bf9f7551c4cf77e50a82dfb0",
-                "reference": "9751d0e79a731db7bf9f7551c4cf77e50a82dfb0",
+                "url": "https://api.github.com/repos/objective-php/application/zipball/afeea8d937e06b74fa54782a517c4848b11ecfbb",
+                "reference": "afeea8d937e06b74fa54782a517c4848b11ecfbb",
                 "shasum": ""
             },
             "require": {
-                "objective-php/config": "^2.0.1",
+                "objective-php/config": "^2.0.0",
                 "objective-php/events-handler": "^2.0.0",
                 "objective-php/filter": "1.0",
                 "objective-php/matcher": "^1.0.0",
                 "objective-php/notification": "^1.0.0",
                 "objective-php/primitives": "^1.3.0",
                 "objective-php/router": "^2.0.0",
-                "objective-php/services-factory": "^2.0.0",
+                "objective-php/services-factory": "dev-master as v2.0.0",
                 "php": ">=7.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
@@ -867,20 +867,20 @@
                 "framework",
                 "objective php"
             ],
-            "time": "2018-04-17T14:53:44+00:00"
+            "time": "2018-04-27T08:05:52+00:00"
         },
         {
             "name": "objective-php/config",
-            "version": "v2.0.6",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/config.git",
-                "reference": "a30ec06cddc2ee45774b803fa2ccf71066784855"
+                "reference": "d0d4cd9db8b38fe81135d870687bc57b411bf845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/config/zipball/a30ec06cddc2ee45774b803fa2ccf71066784855",
-                "reference": "a30ec06cddc2ee45774b803fa2ccf71066784855",
+                "url": "https://api.github.com/repos/objective-php/config/zipball/d0d4cd9db8b38fe81135d870687bc57b411bf845",
+                "reference": "d0d4cd9db8b38fe81135d870687bc57b411bf845",
                 "shasum": ""
             },
             "require": {
@@ -914,7 +914,7 @@
                 "config",
                 "objective-php"
             ],
-            "time": "2018-04-25T15:36:44+00:00"
+            "time": "2018-04-26T09:50:11+00:00"
         },
         {
             "name": "objective-php/events-handler",
@@ -1302,16 +1302,16 @@
         },
         {
             "name": "objective-php/router",
-            "version": "v2.0.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/router.git",
-                "reference": "fc5a27c2b40a5cd0b551e28bab124ef52fa91cd1"
+                "reference": "554893b30ad9d4c22a6f6c72ca9fb4b8c272df0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/router/zipball/fc5a27c2b40a5cd0b551e28bab124ef52fa91cd1",
-                "reference": "fc5a27c2b40a5cd0b551e28bab124ef52fa91cd1",
+                "url": "https://api.github.com/repos/objective-php/router/zipball/554893b30ad9d4c22a6f6c72ca9fb4b8c272df0a",
+                "reference": "554893b30ad9d4c22a6f6c72ca9fb4b8c272df0a",
                 "shasum": ""
             },
             "require": {
@@ -1348,20 +1348,20 @@
                 "objective php",
                 "router"
             ],
-            "time": "2018-04-10T14:49:21+00:00"
+            "time": "2018-04-26T09:32:01+00:00"
         },
         {
             "name": "objective-php/services-factory",
-            "version": "v2.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/services-factory.git",
-                "reference": "ae415f282669c06fc9265223236a687c48f82c3a"
+                "reference": "3f1efbea4b1aaab675945ca1afd560b914115259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/services-factory/zipball/ae415f282669c06fc9265223236a687c48f82c3a",
-                "reference": "ae415f282669c06fc9265223236a687c48f82c3a",
+                "url": "https://api.github.com/repos/objective-php/services-factory/zipball/3f1efbea4b1aaab675945ca1afd560b914115259",
+                "reference": "3f1efbea4b1aaab675945ca1afd560b914115259",
                 "shasum": ""
             },
             "require": {
@@ -1401,7 +1401,7 @@
                 "objective php",
                 "services"
             ],
-            "time": "2018-04-25T09:57:53+00:00"
+            "time": "2018-04-26T12:09:55+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3636,10 +3636,17 @@
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "v2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "9999999-dev",
+            "package": "objective-php/services-factory"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "objective-php/application": 20
+        "objective-php/services-factory": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
