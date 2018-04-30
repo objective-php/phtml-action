@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gde
- * Date: 13/03/2018
- * Time: 22:43
- */
 
 namespace ObjectivePHP\Middleware\Action\PhtmlAction;
-
 
 use ObjectivePHP\Application\ApplicationAwareInterface;
 use ObjectivePHP\Application\ApplicationAccessorsTrait;
@@ -19,9 +12,13 @@ use ObjectivePHP\Middleware\HttpAction\HttpAction;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
 
+/**
+ * Class PhtmlAction
+ *
+ * @package ObjectivePHP\Middleware\Action\PhtmlAction
+ */
 abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterface
 {
-
     use ApplicationAccessorsTrait;
 
     /**
@@ -54,9 +51,11 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
      */
     public function render($vars = [], $layout = null, $view = null): ResponseInterface
     {
-
         $layout = $layout ?? $this->getDefaultLayout();
-        $this->setVars(array_merge($this->getVars(),$vars));
+
+        $vars = array_merge($this->getVars(), $vars);
+
+        $this->setVars($vars);
 
         $this->setViewOutput($this->renderViewScript($view));
 
@@ -68,7 +67,6 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
         $response->getBody()->write($this->getViewOutput());
 
         return $response;
-
     }
 
     /**
@@ -123,7 +121,6 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
         }
 
         if (!file_exists($template)) {
-
             throw new PhtmlTemplateNotFoundException('Template file "' . $template . '“ does not exist.');
         }
 
@@ -155,7 +152,6 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
 
     public function errorHandler($level, $message, $file, $line)
     {
-
         if (ini_get('display_errors') == 0) {
             return;
         }
@@ -217,7 +213,6 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
         } else {
             return $this->errorHandler;
         }
-
     }
 
     /**
@@ -305,7 +300,9 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
 
         if (!file_exists($file)) {
             trigger_error('View script "' . $file . '" not found.', E_USER_WARNING);
-        } else include "$file";
+        } else {
+            include "$file";
+        }
 
         $output = ob_get_clean();
 
@@ -321,5 +318,4 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
 
         return $config->get($key);
     }
-
 }
