@@ -20,7 +20,7 @@
     "objective-php/html": "^1.0",
     "objective-php/http-action": "^1.0",
     "objective-php/application": "^2.0.0",
-    "objective-php/services-factory": "dev-master as v2.0.0"
+    "objective-php/services-factory": "^2.0.0"
   },
   "require-dev": {
     "codeception/codeception": "^2.4"
