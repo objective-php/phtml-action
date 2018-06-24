@@ -152,8 +152,8 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
 
     public function errorHandler($level, $message, $file, $line)
     {
-        if (ini_get('display_errors') == 0) {
-            return;
+        if (ini_get('display_errors') == 0 || (0 === error_reporting())) {
+            return false;
         }
 
         $levelLabel = '';
