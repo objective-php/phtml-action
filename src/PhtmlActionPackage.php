@@ -9,6 +9,7 @@
 namespace ObjectivePHP\Middleware\Action\PhtmlAction;
 
 
+use ObjectivePHP\Application\Package\AbstractPackage;
 use ObjectivePHP\Application\Package\PackageInterface;
 use ObjectivePHP\Config\Config;
 use ObjectivePHP\Config\ConfigAccessorsTrait;
@@ -21,20 +22,20 @@ use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
  * Class PhtmlActionPackage
  * @package ObjectivePHP\Middleware\Action\PhtmlAction
  */
-class PhtmlActionPackage implements PackageInterface, ConfigProviderInterface
+class PhtmlActionPackage extends AbstractPackage
 {
 
     use ConfigAccessorsTrait;
+
     /**
      * @return ConfigInterface
      */
-    public function getConfig(): ConfigInterface
+    public function getDirectives(): array
     {
-        $config = new Config();
-        $config->registerDirective(new PhtmlLayoutPath('app/layouts'));
-        $config->registerDirective(new PhtmlDefaultLayout('layout'));
-
-        return $config;
+        return [
+            new PhtmlLayoutPath('app/layouts'),
+            new PhtmlDefaultLayout('layout')
+        ];
     }
 
 }
