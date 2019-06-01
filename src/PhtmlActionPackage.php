@@ -10,11 +10,8 @@ namespace ObjectivePHP\PhtmlAction;
 
 
 use ObjectivePHP\Application\Package\AbstractPackage;
-use ObjectivePHP\Application\Package\PackageInterface;
-use ObjectivePHP\Config\Config;
 use ObjectivePHP\Config\ConfigAccessorsTrait;
 use ObjectivePHP\Config\ConfigInterface;
-use ObjectivePHP\Config\ConfigProviderInterface;
 use ObjectivePHP\PhtmlAction\Config\PhtmlDefaultLayout;
 use ObjectivePHP\PhtmlAction\Config\PhtmlLayoutPath;
 

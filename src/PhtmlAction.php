@@ -8,7 +8,7 @@ use ObjectivePHP\PhtmlAction\Config\PhtmlDefaultLayout;
 use ObjectivePHP\PhtmlAction\Config\PhtmlLayoutPath;
 use ObjectivePHP\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
 use ObjectivePHP\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
-use ObjectivePHP\Middleware\HttpAction\HttpAction;
+use ObjectivePHP\HttpAction\HttpAction;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
 
