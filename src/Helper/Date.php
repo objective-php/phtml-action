@@ -1,6 +1,6 @@
 <?php
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction\Helper;
+namespace ObjectivePHP\PhtmlAction\Helper;
 
 
 class Date
@@ -9,20 +9,20 @@ class Date
      * @var string DateTime::format() compatible date format
      */
     protected static $defaultFormat = 'Y-m-d';
-    
-    
+
+
     public static function format($dateTime, $format = null)
     {
-        
+
         if (!$dateTime instanceof \DateTime) {
             $dateTime = \DateTime::createFromFormat(\DateTime::ISO8601, $dateTime);
         }
-        
+
         $format = $format ?: self::getDefaultFormat();
-        
+
         return $dateTime->format($format);
     }
-    
+
     /**
      * @return string
      */
@@ -30,7 +30,7 @@ class Date
     {
         return self::$defaultFormat;
     }
-    
+
     /**
      * @param string $defaultFormat
      */
@@ -38,5 +38,5 @@ class Date
     {
         self::$defaultFormat = $defaultFormat;
     }
-    
+
 }

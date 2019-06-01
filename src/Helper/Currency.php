@@ -1,6 +1,6 @@
 <?php
 
-    namespace ObjectivePHP\Middleware\Action\PhtmlAction\Helper;
+    namespace ObjectivePHP\PhtmlAction\Helper;
 
     /**
      * Class Currency

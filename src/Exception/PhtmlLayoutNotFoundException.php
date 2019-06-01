@@ -6,7 +6,7 @@
  * Time: 22:56
  */
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction\Exception;
+namespace ObjectivePHP\PhtmlAction\Exception;
 
 
 class PhtmlLayoutNotFoundException extends \Exception

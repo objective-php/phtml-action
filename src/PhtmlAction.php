@@ -1,13 +1,13 @@
 <?php
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction;
+namespace ObjectivePHP\PhtmlAction;
 
 use ObjectivePHP\Application\ApplicationAwareInterface;
 use ObjectivePHP\Application\ApplicationAccessorsTrait;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlDefaultLayout;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
+use ObjectivePHP\PhtmlAction\Config\PhtmlDefaultLayout;
+use ObjectivePHP\PhtmlAction\Config\PhtmlLayoutPath;
+use ObjectivePHP\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
+use ObjectivePHP\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
 use ObjectivePHP\Middleware\HttpAction\HttpAction;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
@@ -15,7 +15,7 @@ use Zend\Diactoros\Response;
 /**
  * Class PhtmlAction
  *
- * @package ObjectivePHP\Middleware\Action\PhtmlAction
+ * @package ObjectivePHP\PhtmlAction
  */
 abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterface
 {

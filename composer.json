@@ -15,19 +15,19 @@
     }
   ],
   "require": {
-    "php": "^7.0",
+    "php": ">=7.3",
     "objective-php/primitives": "^1.3",
     "objective-php/html": "^1.0",
-    "objective-php/http-action": "^1.0",
-    "objective-php/application": "^2.0.0",
-    "objective-php/services-factory": "^2.0.0"
+    "objective-php/http-action": "^3.0",
+    "objective-php/application": "^3.0.0",
+    "objective-php/services-factory": "^3.0.0"
   },
   "require-dev": {
-    "codeception/codeception": "^2.4"
+    "codeception/codeception": "^3.0"
   },
   "autoload": {
     "psr-4": {
-      "ObjectivePHP\\Middleware\\Action\\PhtmlAction\\": "src/"
+      "ObjectivePHP\\PhtmlAction\\": "src/"
     }
   }
 }

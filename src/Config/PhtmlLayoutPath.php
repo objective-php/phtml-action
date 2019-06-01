@@ -1,6 +1,6 @@
 <?php
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction\Config;
+namespace ObjectivePHP\PhtmlAction\Config;
 
 use ObjectivePHP\Config\Directive\AbstractScalarDirective;
 use ObjectivePHP\Config\Directive\MultiValueDirectiveInterface;
@@ -9,7 +9,7 @@ use ObjectivePHP\Config\Directive\MultiValueDirectiveTrait;
 /**
  * Class PhtmlLayoutPath
  *
- * @package ObjectivePHP\Middleware\Action\PhtmlAction\Config
+ * @package ObjectivePHP\PhtmlAction\Config
  */
 class PhtmlLayoutPath extends AbstractScalarDirective implements MultiValueDirectiveInterface
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction\Config;
+namespace ObjectivePHP\PhtmlAction\Config;
 
 use ObjectivePHP\Config\Directive\AbstractScalarDirective;
 
 /**
  * Class PhtmlLayoutDefault
  *
- * @package ObjectivePHP\Middleware\Action\PhtmlAction\Config
+ * @package ObjectivePHP\PhtmlAction\Config
  */
 class PhtmlDefaultLayout extends AbstractScalarDirective
 {

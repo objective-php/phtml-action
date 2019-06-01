@@ -6,7 +6,7 @@
  * Time: 16:09
  */
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction;
+namespace ObjectivePHP\PhtmlAction;
 
 
 use ObjectivePHP\Application\Package\AbstractPackage;
@@ -15,12 +15,12 @@ use ObjectivePHP\Config\Config;
 use ObjectivePHP\Config\ConfigAccessorsTrait;
 use ObjectivePHP\Config\ConfigInterface;
 use ObjectivePHP\Config\ConfigProviderInterface;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlDefaultLayout;
-use ObjectivePHP\Middleware\Action\PhtmlAction\Config\PhtmlLayoutPath;
+use ObjectivePHP\PhtmlAction\Config\PhtmlDefaultLayout;
+use ObjectivePHP\PhtmlAction\Config\PhtmlLayoutPath;
 
 /**
  * Class PhtmlActionPackage
- * @package ObjectivePHP\Middleware\Action\PhtmlAction
+ * @package ObjectivePHP\PhtmlAction
  */
 class PhtmlActionPackage extends AbstractPackage
 {

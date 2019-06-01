@@ -1,8 +1,8 @@
 <?php
 
-namespace ObjectivePHP\Middleware\Action\PhtmlAction\ExceptionHandler;
+namespace ObjectivePHP\PhtmlAction\ExceptionHandler;
 
-use ObjectivePHP\Middleware\Action\PhtmlAction\PhtmlAction;
+use ObjectivePHP\PhtmlAction\PhtmlAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
