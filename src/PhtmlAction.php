@@ -2,13 +2,13 @@
 
 namespace ObjectivePHP\PhtmlAction;
 
-use ObjectivePHP\Application\ApplicationAwareInterface;
 use ObjectivePHP\Application\ApplicationAccessorsTrait;
+use ObjectivePHP\Application\ApplicationAwareInterface;
+use ObjectivePHP\HttpAction\HttpAction;
 use ObjectivePHP\PhtmlAction\Config\PhtmlDefaultLayout;
 use ObjectivePHP\PhtmlAction\Config\PhtmlLayoutPath;
 use ObjectivePHP\PhtmlAction\Exception\PhtmlLayoutNotFoundException;
 use ObjectivePHP\PhtmlAction\Exception\PhtmlTemplateNotFoundException;
-use ObjectivePHP\HttpAction\HttpAction;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
 
@@ -20,6 +20,11 @@ use Zend\Diactoros\Response;
 abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterface
 {
     use ApplicationAccessorsTrait;
+
+    /**
+     *
+     */
+    const DISABLE_LAYOUT = false;
 
     /**
      * @var string
@@ -120,10 +125,23 @@ abstract class PhtmlAction extends HttpAction implements ApplicationAwareInterfa
             $template = substr($reflected->getFileName(), 0, -4) . ".phtml";
         }
 
+
         if (!file_exists($template)) {
+
+            // if no template exists for the current action, check if inheritates from another action
+            $parents = class_parents($this);
+            foreach ($parents as $parent) {
+                $reflectedParent = new \ReflectionClass($parent);
+                $template = substr($reflectedParent->getFileName(), 0, -4) . ".phtml";
+                if(file_exists($template)) goto shunt;
+                $this->getApplication()->getEventsHandler()->trigger('phtml-action.renderer.message.info', $this, ['message' => sprintf('Unable to find template "%s" aside class "%s"', $template, $parent)]);
+            }
+
             throw new PhtmlTemplateNotFoundException('Template file "' . $template . '“ does not exist.');
+
         }
 
+        shunt:
         return $template;
     }
 
